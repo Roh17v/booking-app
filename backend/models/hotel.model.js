@@ -23,7 +23,7 @@ const hotelSchema = new mongoose.Schema({
   },
   title: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,
@@ -44,5 +44,35 @@ const hotelSchema = new mongoose.Schema({
     default: false,
   },
 });
+
+export function validateHotel(hotel) {
+  const schema = Joi.object({
+    name: Joi.string().required().label("Name"),
+
+    city: Joi.string().required().label("City"),
+
+    photos: Joi.array()
+      .items(Joi.string().uri().label("Photo URL"))
+      .label("Photos"),
+
+    ratings: Joi.number().min(0).max(5).label("Ratings"),
+
+    address: Joi.string().required().label("Address"),
+
+    title: Joi.string().required().label("Title"),
+
+    description: Joi.string().required().label("Description"),
+
+    distance: Joi.string().required().label("Distance"),
+
+    rooms: Joi.array().items(Joi.string().label("Room")).label("Rooms"),
+
+    cheapestPrice: Joi.number().label("Cheapest Price"),
+
+    featured: Joi.boolean().default(false).label("Featured"),
+  });
+
+  return schema.validate(hotel);
+}
 
 export const Hotel = mongoose.model("Hotel", hotelSchema);
