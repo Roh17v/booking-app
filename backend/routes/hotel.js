@@ -27,10 +27,42 @@ router.put("/:id", async (req, res) => {
       console.log("Failed to Update the Hotel: ", error);
       res.status(500).send(error);
     }
-  });
+  });   
 
 //DELETE
+router.delete("/:id", async (req, res) => {
+    try {
+      const deletedHotel = await Hotel.findByIdAndDelete(req.params.id);
+      if(!deletedHotel) return res.status(404).send({message: "Hotel Not Found!"});
+      return res.status(200).send(deletedHotel);
+    } catch (error) {
+      console.log("Failed to delete the Hotel: ", error);
+      res.status(500).send(error);
+    }
+  }); 
+
 //GET
+router.get("/:id", async (req, res) => {
+    try {
+      const hotel = await Hotel.findById(req.params.id);
+      if(!hotel) return res.status(404).send({message: "Hotel Not Found!"});
+      return res.status(200).send(hotel);
+    } catch (error) {
+      console.log("Failed to Find the Hotel: ", error);
+      res.status(500).send(error);
+    }
+  }); 
+
 //GET ALL
+router.get("/", async (req, res) => {
+    try {
+      const hotel = await Hotel.find();
+      if(!hotel) return res.status(404).send({message: "Hotel Not Found!"});
+      return res.status(200).send(hotel);
+    } catch (error) {
+      console.log("Failed to Find the Hotel: ", error);
+      res.status(500).send(error);
+    }
+  }); 
 
 export default router;
