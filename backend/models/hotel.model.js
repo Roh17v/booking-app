@@ -21,20 +21,28 @@ const hotelSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  title: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true,
+  },
   distance: {
     type: String,
     required: true,
   },
   rooms: {
-    type: [String]
+    type: [String],
   },
   cheapestPrice: {
-    type: Number
+    type: Number,
   },
   featured: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 export const Hotel = mongoose.model("Hotel", hotelSchema);
