@@ -16,7 +16,15 @@ router.post("/", async (req, res, next) => {
     const salt = await bcrypt.genSalt(10);
     newUser.password = await bcrypt.hash(newUser.password, salt);
     const result = await newUser.save();
-    return res.status(201).send(result);
+
+    //token generation
+    const token = newUser.generateAuthToken();
+    res.cookie('authToken', token,{
+        httpOnly: true, 
+        sameSite: 'strict', 
+    });
+
+    return res.status(201).send("User registered Successfully.");
   } catch (error) {
     next(error);
   }

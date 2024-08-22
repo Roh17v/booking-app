@@ -2,8 +2,7 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("Login Here.");
+router.post("/", (req, res, next) => {
 });
 
 export default router;
