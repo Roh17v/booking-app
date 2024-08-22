@@ -1,5 +1,6 @@
 import express from "express";
 import { Hotel, validateHotel } from "../models/hotel.model.js";
+import { createError } from "../utils/error.js";
 
 const router = express.Router();
 
@@ -54,14 +55,13 @@ router.get("/:id", async (req, res) => {
   }); 
 
 //GET ALL
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
     try {
       const hotel = await Hotel.find();
       if(!hotel) return res.status(404).send({message: "Hotel Not Found!"});
       return res.status(200).send(hotel);
     } catch (error) {
-      console.log("Failed to Find the Hotel: ", error);
-      res.status(500).send(error);
+      next(error);
     }
   }); 
 

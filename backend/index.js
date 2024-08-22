@@ -13,6 +13,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/login", loginRouter);
 app.use("/api/hotels", hotelRouter);
 
+//Error Handler
+app.use((err, req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.message || "Something Went Wrong!";
+  if (err)
+    return res.status(errorStatus).json({
+      success: false,
+      status: errorStatus,
+      message: errorMessage,
+      stack: err.stack,
+    });
+});
+
 connectDB()
   .then(() => {
     app.listen(process.env.PORT || 5000, () => {
