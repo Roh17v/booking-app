@@ -44,7 +44,7 @@ const hotelSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-});
+},{timestamps: true});
 
 export function validateHotel(hotel) {
   const schema = Joi.object({

@@ -1,7 +1,6 @@
-import { Hotel } from "../models/hotel.model.js";
-import { validateHotel } from "../models/hotel.model.js";
+import { Hotel, validateHotel } from "../models/hotel.model.js";
 
-export const createHotel = async (req, res) => {
+export const createHotel = async (req, res, next) => {
   const { error } = validateHotel(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -14,7 +13,7 @@ export const createHotel = async (req, res) => {
   }
 };
 
-export const updateHotel = async (req, res) => {
+export const updateHotel = async (req, res, next) => {
   try {
     const updatedHotel = await Hotel.findByIdAndUpdate(
       req.params.id,
@@ -27,7 +26,7 @@ export const updateHotel = async (req, res) => {
   }
 };
 
-export const deleteHotel = async (req, res) => {
+export const deleteHotel = async (req, res, next) => {
   try {
     const deletedHotel = await Hotel.findByIdAndDelete(req.params.id);
     if (!deletedHotel)
@@ -38,7 +37,7 @@ export const deleteHotel = async (req, res) => {
   }
 };
 
-export const getHotel = async (req, res) => {
+export const getHotel = async (req, res, next) => {
   try {
     const hotel = await Hotel.findById(req.params.id);
     if (!hotel) return res.status(404).send({ message: "Hotel Not Found!" });

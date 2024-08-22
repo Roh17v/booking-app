@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import hotelRouter from "./routes/hotel.js";
 import loginRouter from "./routes/login.js";
+import registerRouter from "./routes/register.js";
 import connectDB from "./src/db/index.js";
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/login", loginRouter);
 app.use("/api/hotels", hotelRouter);
+app.use("/api/register", registerRouter);
 
 //Error Handler
 app.use((err, req, res, next) => {
@@ -24,6 +26,7 @@ app.use((err, req, res, next) => {
       message: errorMessage,
       stack: err.stack,
     });
+  next();
 });
 
 connectDB()
