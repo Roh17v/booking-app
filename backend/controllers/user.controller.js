@@ -27,9 +27,9 @@ export const deleteUser = async (req, res, next) => {
 
 export const getUser = async (req, res, next) => {
   try {
-    const User = await User.findById(req.params.id);
-    if (!User) return next(createError(404, "User Not Found."));
-    return res.status(200).send(User);
+    const user = await User.findById(req.params.id);
+    if (!user) return next(createError(404, "User Not Found."));
+    return res.status(200).send(user);
   } catch (error) {
     next(error);
   }
@@ -37,9 +37,9 @@ export const getUser = async (req, res, next) => {
 
 export const getUsers = async (req, res, next) => {
   try {
-    const User = await User.find();
-    if (!User) return next(createError(404, "Not Found!"));
-    return res.status(200).send(User);
+    const Users = await User.find();
+    if (!Users) return next(createError(404, "Not Found!"));
+    return res.status(200).send(Users);
   } catch (error) {
     next(error);
   }

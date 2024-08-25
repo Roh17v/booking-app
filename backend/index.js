@@ -1,7 +1,7 @@
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import express from "express";
-import validateToken from "./middlewares/auth.js";
+import { validateToken, verifyUser } from "./middlewares/auth.js";
 import hotelRouter from "./routes/hotel.js";
 import loginRouter from "./routes/login.js";
 import registerRouter from "./routes/register.js";
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/login", loginRouter);
 app.use("/api/hotels", hotelRouter);
-app.use("/api/user", validateToken, userRouter);
+app.use("/api/user", userRouter);
 app.use("/api/register", registerRouter);
 
 app.get("/api/data", validateToken, (req, res) => {
