@@ -5,7 +5,7 @@ import {
   getUsers,
   updateUser,
 } from "../controllers/user.controller.js";
-import { verifyUser } from "../middlewares/auth.js";
+import { verifyAdmin, verifyUser } from "../middlewares/auth.js";
 
 const router = express.Router();
 
@@ -19,6 +19,6 @@ router.delete("/:id", verifyUser, deleteUser);
 router.get("/:id", verifyUser, getUser);
 
 //GET ALL
-router.get("/", getUsers);
+router.get("/", verifyAdmin, getUsers);
 
 export default router;

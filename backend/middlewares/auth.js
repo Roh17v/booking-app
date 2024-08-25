@@ -24,3 +24,13 @@ export const verifyUser = (req, res, next) => {
     } else return next(createError(403, "You are not Authorized!"));
   });
 };
+
+export const verifyAdmin = (req, res, next) => {
+  validateToken(req, res, (err) => {
+    if (err) return next(err);
+    console.log(req.user._id, " ", req.params.id);
+    if (req.user.isAdmin) {
+      next();
+    } else return next(createError(403, "You are not Authorized!"));
+  });
+};
