@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import { validateToken, verifyUser } from "./middlewares/auth.js";
 import hotelRouter from "./routes/hotel.js";
+import roomRouter from './routes/room.js'
 import loginRouter from "./routes/login.js";
 import registerRouter from "./routes/register.js";
 import userRouter from "./routes/user.js";
@@ -16,7 +17,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/login", loginRouter);
-app.use("/api/hotels", hotelRouter);
+app.use("/api/hotel", hotelRouter);
+app.use('/api/room', roomRouter);
 app.use("/api/user", userRouter);
 app.use("/api/register", registerRouter);
 
