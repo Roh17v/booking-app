@@ -7,10 +7,46 @@ import {
   faPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { addDays, format } from "date-fns";
+import { useEffect, useRef, useState } from "react";
+import { DateRange, Range } from "react-date-range";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
 
 const Header = () => {
   const [isActive, setIsActive] = useState(true);
+  const [openDate, setOpenDate] = useState(false);
+  const [state, setState] = useState<Range[]>([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: "selection",
+      autoFocus: true,
+      showDateDisplay: true,
+    },
+  ]);
+  const calendarRef = useRef<HTMLDivElement>(null);
+  const calendardivRef = useRef<HTMLDivElement>(null);
+  const toggleCalendar = () => setOpenDate((prev) => !prev);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        calendardivRef.current &&
+        !calendardivRef.current.contains(event.target as Node) &&
+        calendarRef.current &&
+        !calendarRef.current.contains(event.target as Node)
+      ) {
+        setOpenDate(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <div className="flex justify-center text-white bg-primary-blue relative">
       <div className="max-w-[1024px] w-full mt-[20px] mb-[100px]">
@@ -49,11 +85,32 @@ const Header = () => {
               placeholder="Where are you going?"
             />
           </div>
-          <div className="flex gap-2 items-center p-4 bg-white m-1 flex-1 rounded-md mr-0">
-            <FontAwesomeIcon icon={faCalendarDays} className="cursor-pointer" />
-            <span className="cursor-pointer text-base">
-              Check-in Date — Check-out Date
+          <div
+            className="flex gap-2 items-center p-4 bg-white m-1 flex-1 rounded-md mr-0 relative"
+            ref={calendardivRef}
+          >
+            <FontAwesomeIcon
+              icon={faCalendarDays}
+              className="cursor-pointer"
+              onClick={toggleCalendar}
+            />
+            <span className="cursor-pointer text-base" onClick={toggleCalendar}>
+              {`${format(
+                state[0].startDate ?? new Date(),
+                "dd/MM/yyyy"
+              )} — ${format(state[0].endDate ?? new Date(), "dd/MM/yyyy")}`}
             </span>
+            {openDate && (
+              <div ref={calendarRef}>
+                <DateRange
+                  className="absolute top-16 left-0 bg-gray-100"
+                  editableDateInputs={true}
+                  onChange={(item) => setState([item.selection])}
+                  moveRangeOnFirstSelection={false}
+                  ranges={state}
+                />
+              </div>
+            )}
           </div>
           <div className="flex gap-2 items-center p-4 m-1 flex-1 rounded-md bg-white mr-0">
             <FontAwesomeIcon icon={faPerson} className="cursor-pointer" />
