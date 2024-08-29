@@ -1,6 +1,6 @@
 const Navbar = () => {
   return (
-    <nav className="flex w-full justify-center bg-primary-blue h-[50px] py-8">
+    <nav className="flex w-full justify-center bg-primary-blue h-[50px] py-8 px-4">
       <div className="max-w-[1024px] flex justify-between items-center w-full">
         <div>
           <span className="text-2xl text-white font-medium">Booking.com</span>
