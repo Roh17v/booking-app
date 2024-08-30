@@ -15,6 +15,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 
 const Header = () => {
   const [isActive, setIsActive] = useState(true);
+  const [openPeople, setOpenPeople] = useState(false);
   const [openDate, setOpenDate] = useState(false);
   const [state, setState] = useState<Range[]>([
     {
@@ -25,18 +26,40 @@ const Header = () => {
       showDateDisplay: true,
     },
   ]);
+  const [options, setOptions] = useState({
+    adult: 1,
+    children: 0,
+    room: 1,
+  });
+
+  const handleOptions = (
+    name: "adult" | "children" | "room",
+    operation: string
+  ) => {
+    setOptions((prev) => {
+      return {
+        ...prev,
+        [name]: operation === "i" ? options[name] + 1 : options[name] - 1,
+      };
+    });
+  };
+
   const calendarRef = useRef<HTMLDivElement>(null);
+  const optionsRef = useRef<HTMLDivElement>(null);
   const calendardivRef = useRef<HTMLDivElement>(null);
   const toggleCalendar = () => setOpenDate((prev) => !prev);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        calendardivRef.current &&
-        !calendardivRef.current.contains(event.target as Node) &&
-        calendarRef.current &&
-        !calendarRef.current.contains(event.target as Node)
+        (optionsRef.current &&
+          !optionsRef.current.contains(event.target as Node)) ||
+        (calendardivRef.current &&
+          !calendardivRef.current.contains(event.target as Node) &&
+          calendarRef.current &&
+          !calendarRef.current.contains(event.target as Node))
       ) {
+        setOpenPeople(false);
         setOpenDate(false);
       }
     };
@@ -112,11 +135,79 @@ const Header = () => {
               </div>
             )}
           </div>
-          <div className="flex gap-2 items-center p-4 m-1 flex-1 rounded-md bg-white mr-0">
+          <div
+            className="flex gap-2 items-center p-4 m-1 flex-1 rounded-md bg-white mr-0 relative"
+            onClick={() => setOpenPeople((prev) => !prev)}
+          >
             <FontAwesomeIcon icon={faPerson} className="cursor-pointer" />
             <span className="cursor-pointer text-base">
-              2 adults 0 children 1 room
+              {`${options.adult} adults • ${options.children} children • ${options.room} room`}
             </span>
+            {openPeople && (
+              <div
+                className="absolute top-16 bg-gray-200 px-4 py-2 rounded-md space-y-4"
+                onClick={(event) => event.stopPropagation()}
+                ref={optionsRef}
+              >
+                <div className="flex justify-between gap-8 items-center">
+                  <span>Adults</span>
+                  <div className="flex gap-4 items-center">
+                    <button
+                      onClick={() => handleOptions("adult", "i")}
+                      className="font-bold text-primary-blue text-xl border border-gray-500 py-1 px-2 rounded"
+                    >
+                      +
+                    </button>
+                    <span>{options.adult}</span>
+                    <button
+                      disabled={options.adult <= 1}
+                      onClick={() => handleOptions("adult", "d")}
+                      className="font-bold text-primary-blue text-xl border border-gray-500 py-1 px-2 rounded disabled:cursor-not-allowed"
+                    >
+                      -
+                    </button>
+                  </div>
+                </div>
+                <div className="flex justify-between gap-8 items-center">
+                  <span>Children</span>
+                  <div className="flex gap-4 items-center">
+                    <button
+                      onClick={() => handleOptions("children", "i")}
+                      className="font-bold text-primary-blue text-xl border border-gray-500 py-1 px-2 rounded"
+                    >
+                      +
+                    </button>
+                    <span>{options.children}</span>
+                    <button
+                      disabled={options.children <= 0}
+                      onClick={() => handleOptions("children", "d")}
+                      className="font-bold text-primary-blue text-xl border border-gray-500 py-1 px-2 rounded disabled:cursor-not-allowed"
+                    >
+                      -
+                    </button>
+                  </div>
+                </div>
+                <div className="flex justify-between gap-8 items-center">
+                  <span>Rooms</span>
+                  <div className="flex gap-4 items-center">
+                    <button
+                      onClick={() => handleOptions("room", "i")}
+                      className="font-bold text-primary-blue text-xl border border-gray-500 py-1 px-2 rounded"
+                    >
+                      +
+                    </button>
+                    <span>{options.room}</span>
+                    <button
+                      disabled={options.room <= 1}
+                      onClick={() => handleOptions("room", "d")}
+                      className="font-bold text-primary-blue text-xl border border-gray-500 py-1 px-2 rounded disabled:cursor-not-allowed"
+                    >
+                      -
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           <button className="bg-primary-blue text-white px-4 m-1 rounded-md text-xl">
             Search
