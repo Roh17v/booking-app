@@ -1,7 +1,9 @@
 import Featured from "../components/Featured";
 import FeaturedProperties from "../components/FeaturedProperties";
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
+import NewsLetterSubscription from "../components/NewsLetterSubscription";
 import PropertyList from "../components/PropertyList";
 
 const Home = () => {
@@ -17,7 +19,9 @@ const Home = () => {
         <PropertyList />
         <h1 className="text-xl font-bold w-[1024px]">Homes guests love</h1>
         <FeaturedProperties />
+        <NewsLetterSubscription />
       </div>
+      <Footer />
     </div>
   );
 };
