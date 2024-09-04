@@ -12,12 +12,15 @@ import { useEffect, useRef, useState } from "react";
 import { DateRange, Range } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
+  const [destination, setDestination] = useState("");
   const [isActive, setIsActive] = useState(true);
   const [openPeople, setOpenPeople] = useState(false);
   const [openDate, setOpenDate] = useState(false);
-  const [state, setState] = useState<Range[]>([
+  const [showReminder, setShowReminder] = useState(false);
+  const [date, setDate] = useState<Range[]>([
     {
       startDate: new Date(),
       endDate: addDays(new Date(), 7),
@@ -43,6 +46,17 @@ const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
       };
     });
   };
+  const destinationInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+  const handleSearch = () => {
+    if (destination === "") {
+      setShowReminder(true);
+      destinationInputRef.current?.focus();
+    } else {
+      setShowReminder(false);
+      navigate("/hotels", { state: { destination, date, options } });
+    }
+  };
 
   const calendarRef = useRef<HTMLDivElement>(null);
   const optionsRef = useRef<HTMLDivElement>(null);
@@ -59,6 +73,7 @@ const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
         !optionsDivRef.current.contains(event.target as Node)
       ) {
         setOpenPeople((prev) => !prev);
+        setShowReminder(false);
       }
       if (
         calendardivRef.current &&
@@ -112,13 +127,25 @@ const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
               Search deals on hotels, homes, and much more...
             </p>
             <div className="bg-primary-yellow flex text-slate-600 text-md absolute w-full max-w-[1024px] transform translate-y-1/2 rounded-md text-lg bottom-0">
-              <div className="flex gap-2 items-center p-3 bg-white m-1 flex-1 rounded-md mr-0">
+              <div className="flex gap-2 items-center p-3 bg-white m-1 flex-1 rounded-md mr-0 relative">
                 <FontAwesomeIcon icon={faBed} className="cursor-pointer" />
                 <input
                   type="text"
                   className="bg-white outline-none w-full h-full text-base"
                   placeholder="Where are you going?"
+                  value={destination}
+                  ref={destinationInputRef}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setDestination(e.target.value);
+                    setShowReminder(false);
+                  }}
                 />
+                {showReminder && (
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 w-64 bg-red-600 text-white text-sm p-2 rounded-md shadow-lg">
+                    <p>Please enter a destination name.</p>
+                    <div className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-red-600"></div>
+                  </div>
+                )}
               </div>
               <div
                 className="flex gap-2 items-center p-4 bg-white m-1 flex-1 rounded-md mr-0 relative"
@@ -131,9 +158,9 @@ const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
                 />
                 <span className="cursor-pointer text-base">
                   {`${format(
-                    state[0].startDate ?? new Date(),
+                    date[0].startDate ?? new Date(),
                     "dd/MM/yyyy"
-                  )} — ${format(state[0].endDate ?? new Date(), "dd/MM/yyyy")}`}
+                  )} — ${format(date[0].endDate ?? new Date(), "dd/MM/yyyy")}`}
                 </span>
                 {openDate && (
                   <div
@@ -143,9 +170,9 @@ const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
                   >
                     <DateRange
                       editableDateInputs={true}
-                      onChange={(item) => setState([item.selection])}
+                      onChange={(item) => setDate([item.selection])}
                       moveRangeOnFirstSelection={false}
-                      ranges={state}
+                      ranges={date}
                     />
                   </div>
                 )}
@@ -225,7 +252,10 @@ const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
                   </div>
                 )}
               </div>
-              <button className="bg-primary-blue text-white px-4 m-1 rounded-md text-xl">
+              <button
+                className="bg-primary-blue text-white px-4 m-1 rounded-md text-xl"
+                onClick={handleSearch}
+              >
                 Search
               </button>
             </div>
