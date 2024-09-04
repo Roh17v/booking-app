@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const SearchFilter: React.FC = () => {
-  const [priceRange, setPriceRange] = useState([0, 2000]);
+  const [priceRange, setPriceRange] = useState([0, 10000]);
   const [propertyType, setPropertyType] = useState<string[]>([]);
   const [rating, setRating] = useState<number | null>(null);
 
@@ -29,13 +29,13 @@ const SearchFilter: React.FC = () => {
         <input
           type="range"
           min="0"
-          max="500"
+          max="10000"
           value={priceRange[0]}
           onChange={handlePriceChange}
           className="w-full mt-2"
         />
         <div className="text-sm text-gray-600 mt-1">
-          ${priceRange[0]} - ${priceRange[1]}
+          ₹{priceRange[0]} - ₹{priceRange[1]}
         </div>
       </div>
 

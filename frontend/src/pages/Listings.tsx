@@ -1,9 +1,12 @@
+import { useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import ListingCard from "../components/ListingCard";
 import Navbar from "../components/Navbar";
 import SearchFilter from "../components/SearchFilter";
 
 const Listings = () => {
+  const location = useLocation();
+  console.log(location);
   return (
     <div>
       <Navbar />
