@@ -20,7 +20,7 @@ const SearchFilter: React.FC = () => {
   };
 
   return (
-    <div className="w-64 bg-white shadow-lg p-4 rounded-lg">
+    <div className=" bg-white shadow-lg p-4 rounded-lg">
       <h2 className="text-xl font-semibold mb-4">Filter by:</h2>
 
       {/* Price Range Filter */}
