@@ -160,6 +160,41 @@ const HotelDetails = () => {
               </div>
             ))}
           </div>
+          <div className="flex justify-between mt-4 p-2 gap-2 mb-4">
+            <div className="flex-[3]">
+              <h1 className="text-2xl font-bold mb-2">
+                Stay in Heart of Krakov
+              </h1>
+              <div className="text-lg">
+                Located a 5-minute walk from St. Florian's Gate in Krakow, Tower
+                Street Apartments has accommodations with air conditioning and
+                free WiFi. The units come with hardwood floors and feature a
+                fully equipped kitchenette with a microwave, a flat-screen TV,
+                and a private bathroom with shower and a hairdryer. A fridge is
+                also offered, as well as an electric tea pot and a coffee
+                machine. Popular points of interest near the apartment include
+                Cloth Hall, Main Market Square and Town Hall Tower. The nearest
+                airport is John Paul II International Kraków–Balice, 16.1 km
+                from Tower Street Apartments, and the property offers a paid
+                airport shuttle service.
+              </div>
+            </div>
+            <div className="p-4 bg-[#ebf3ff] flex-[1] rounded-lg">
+              <h1 className="text-xl text-gray-500 font-bold mb-2">
+                Perfect for a 9-night stay!
+              </h1>
+              <div className="text-base">
+                Located in the real heart of Krakow, this property has an
+                excellent location score of 9.8!
+              </div>
+              <div className="text-2xl my-2">
+                <b className="font-bold text-3xl">$945</b> (9 nights)
+              </div>
+              <button className="bg-blue-500 text-white rounded-md font-semibold px-3 py-2 hover:bg-blue-600 mt-4 w-full">
+                Reserve or Book Now!
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <NewsletterSubscription />
