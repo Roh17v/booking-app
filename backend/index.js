@@ -1,11 +1,12 @@
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import { validateToken, verifyUser } from "./middlewares/auth.js";
+import { validateToken } from "./middlewares/auth.js";
 import hotelRouter from "./routes/hotel.js";
-import roomRouter from './routes/room.js'
 import loginRouter from "./routes/login.js";
 import registerRouter from "./routes/register.js";
+import roomRouter from "./routes/room.js";
 import userRouter from "./routes/user.js";
 import connectDB from "./src/db/index.js";
 
@@ -13,12 +14,19 @@ const app = express();
 dotenv.config();
 
 //middlewares
+app.use(
+  cors({
+    origin: "https://5173-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io", // Allow only this origin
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed methods
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  })
+);
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/login", loginRouter);
-app.use("/api/hotel", hotelRouter);
-app.use('/api/room', roomRouter);
+app.use("/api/hotels", hotelRouter);
+app.use("/api/room", roomRouter);
 app.use("/api/user", userRouter);
 app.use("/api/register", registerRouter);
 

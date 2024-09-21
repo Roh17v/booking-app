@@ -30,7 +30,7 @@ const PropertyCard = ({
         <div className="text-gray-900 font-bold text-xl mb-2">{price}</div>
       </div>
       <div className="px-6 pt-4 pb-2">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
           Reserve
         </button>
       </div>

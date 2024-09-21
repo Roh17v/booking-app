@@ -11,7 +11,7 @@ const Home = () => {
     <div>
       <Navbar />
       <Header showSearchBar={true} />
-      <div className="flex flex-col mt-16 items-center gap-4 z-0">
+      <div className="flex flex-col mt-16 items-center gap-4 z-0 w-full">
         <Featured />
         <h1 className="text-xl font-bold w-[1024px]">
           Browse by property type
