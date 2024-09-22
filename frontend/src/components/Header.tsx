@@ -253,7 +253,7 @@ const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
                 )}
               </div>
               <button
-                className="bg-primary-blue text-white px-4 m-1 rounded-md text-xl"
+                className="bg-primary-blue text-white px-4 m-1 rounded-md text-xl transition-all focus:scale-95"
                 onClick={handleSearch}
               >
                 Search
