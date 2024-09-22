@@ -1,62 +1,63 @@
-import PropertyCard from "./PropertyCard"; // Import the PropertyCard component
+import useFetch from "../hooks/useFetch";
+import PropertyCard from "./PropertyCard";
+
+interface PropertyProps {
+  _id: string;
+  name: string;
+  city: string;
+  type: string;
+  cheapestPrice: number;
+  rating: number;
+  photos: [string];
+  ratingText: string;
+  price: number;
+}
 
 const FeaturedProperties = () => {
-  const properties = [
+  const { data, loading, error } = useFetch(
+    "https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/hotels?featured=true&limit=4",
     {
-      id: 1,
-      imgSrc:
-        "https://cf.bstatic.com/xdata/images/hotel/square600/13125860.webp?k=e148feeb802ac3d28d1391dad9e4cf1e12d9231f897d0b53ca067bde8a9d3355&o=&s=1",
-      name: "Aparthotel Stare Miasto",
-      city: "Madrid",
-      price: "Starting from $120",
-      rating: 8.9,
-      ratingText: "Excellent",
-    },
-    {
-      id: 2,
-      imgSrc:
-        "https://cf.bstatic.com/xdata/images/hotel/square600/579099936.webp?k=e04cc7f7fe864ce09b7d7d978dbb7db3e558038a2151eb7c4c11e895bafbd8c0&o=",
-      name: "Comfort Suites Airport",
-      city: "Austin",
-      price: "Starting from $140",
-      rating: 9.3,
-      ratingText: "Exceptional",
-    },
-    {
-      id: 3,
-      imgSrc:
-        "https://cf.bstatic.com/xdata/images/hotel/square600/87375132.webp?k=a3eff4ea2475f3a4de01f017463acd719bddada5e63f87f6c0952f8590498865&o=",
-      name: "Four Seasons Hotel",
-      city: "Lisbon",
-      price: "Starting from $99",
-      rating: 8.8,
-      ratingText: "Excellent",
-    },
-    {
-      id: 4,
-      imgSrc:
-        "https://cf.bstatic.com/xdata/images/hotel/square600/29466558.webp?k=7f9cf4736f69b30c20fa7a751bb8711fa195bc9ff6092d5412d52daf6cada17f&o=",
-      name: "Hilton Garden Inn",
-      city: "Berlin",
-      price: "Starting from $105",
-      rating: 8.9,
-      ratingText: "Excellent",
-    },
-  ];
+      method: "GET",
+    }
+  );
+
+  const SkeletonCard = () => {
+    return (
+      <div className="max-w-md rounded overflow-hidden shadow-lg flex flex-col justify-between animate-pulse">
+        <div className="w-full h-48 bg-gray-300"></div>
+        <div className="px-6 py-4">
+          <div className="h-6 bg-gray-300 rounded mb-4"></div>
+          <div className="h-4 bg-gray-300 rounded w-3/4 mb-4"></div>
+          <div className="flex items-center mt-2 mb-2">
+            <div className="h-4 w-10 bg-gray-300 rounded mr-2"></div>
+            <div className="h-4 w-20 bg-gray-300 rounded"></div>
+          </div>
+          <div className="h-6 bg-gray-300 rounded w-1/2 mb-4"></div>
+        </div>
+        <div className="px-6 pt-4 pb-2">
+          <div className="h-10 bg-gray-300 rounded w-full"></div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-[1024px]">
-      {properties.map((property) => (
-        <PropertyCard
-          key={property.id}
-          imgSrc={property.imgSrc}
-          name={property.name}
-          city={property.city}
-          price={property.price}
-          rating={property.rating}
-          ratingText={property.ratingText}
-        />
-      ))}
+      {loading
+        ? Array.from({ length: 4 }).map((_, index) => (
+            <SkeletonCard key={index} />
+          )) // Show 4 skeleton loaders while loading
+        : data.map((property: any) => (
+            <PropertyCard
+              key={property._id}
+              imgSrc={property.photos[0]}
+              name={property.name}
+              city={property.city}
+              price={property.cheapestPrice}
+              rating={property.rating}
+              ratingText="Excellent"
+            />
+          ))}
     </div>
   );
 };

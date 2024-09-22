@@ -41,7 +41,7 @@ const PropertyList = () => {
                 className="h-[150px] w-full object-cover"
               />
               <div>
-                <h1 className="font-bold">{data[index].type}</h1>
+                <h1 className="font-bold capitalize">{data[index].type}</h1>
                 <h2 className="font-light text-gray-500">
                   {data[index].count}
                 </h2>

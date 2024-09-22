@@ -37,7 +37,7 @@ const hotelSchema = new mongoose.Schema(
     rating: {
       type: Number,
       min: 0,
-      max: 5,
+      max: 10,
     },
     rooms: {
       type: [String],
@@ -53,6 +53,13 @@ const hotelSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+//middleware to make sure that city field is always lowercase
+hotelSchema.pre("save", function (next) {
+  this.city = this.city.toLowerCase();
+  this.type = this.type.toLowerCase();
+  next();
+});
 
 export function validateHotel(hotel) {
   const schema = Joi.object({

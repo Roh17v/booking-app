@@ -2,7 +2,7 @@ import useFetch from "../hooks/useFetch";
 
 const Featured = () => {
   const { data, loading, error } = useFetch(
-    "https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/hotels/count-by-cities?cities=berlin,madrid,london",
+    "https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/hotels/count-by-cities?cities=berlin,madrid,london,delhi",
     {
       method: "GET",
     }
@@ -27,7 +27,7 @@ const Featured = () => {
           <>
             <img
               loading="lazy"
-              src="https://cf.bstatic.com/xdata/images/city/max250/957801.webp?k=a969e39bcd40cdcc21786ba92826063e3cb09bf307bcfeac2aa392b838e9b7a5&o="
+              src="https://q-xx.bstatic.com/xdata/images/city/max250/977237.jpg?k=6d894f6f1bc6d83e5206ee19d4e593b008640ec596ed3803071cc03aff856b8b&o="
               alt="Berlin"
               className="w-full object-cover overflow-hidden rounded-md"
             />
@@ -50,7 +50,7 @@ const Featured = () => {
           <>
             <img
               loading="lazy"
-              src="https://cf.bstatic.com/xdata/images/city/max250/690334.webp?k=b99df435f06a15a1568ddd5f55d239507c0156985577681ab91274f917af6dbb&o="
+              src="https://q-xx.bstatic.com/xdata/images/city/max250/971353.jpg?k=a5b47d2c38469086427837dfe64ab2e6f57ba52f0504359ef4cc02dc4b9b0737&o="
               alt="Madrid"
               className="w-full object-cover overflow-hidden rounded-md"
             />
@@ -73,7 +73,7 @@ const Featured = () => {
           <>
             <img
               loading="lazy"
-              src="https://cf.bstatic.com/xdata/images/city/max250/689422.webp?k=2595c93e7e067b9ba95f90713f80ba6e5fa88a66e6e55600bd27a5128808fdf2&o="
+              src="https://r-xx.bstatic.com/xdata/images/city/max250/977262.jpg?k=2b852648c76ccaff8be05333057712eda873343dfaa79cd23e55534a1a55aecc&o="
               alt="London"
               className="w-full object-cover overflow-hidden rounded-md"
             />
@@ -82,6 +82,29 @@ const Featured = () => {
               <h2 className="text-lg font-semibold text-white">
                 {data && data[2] !== undefined
                   ? `${data[2]} hotels`
+                  : "No hotels"}
+              </h2>
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className="relative">
+        {loading ? (
+          <Skeleton />
+        ) : (
+          <>
+            <img
+              loading="lazy"
+              src="https://r-xx.bstatic.com/xdata/images/city/max250/684765.jpg?k=3f7d20034c13ac7686520ac1ccf1621337a1e59860abfd9cbd96f8d66b4fc138&o="
+              alt="India"
+              className="w-full object-cover overflow-hidden rounded-md"
+            />
+            <div className="absolute left-4 bottom-6">
+              <h1 className="text-xl font-bold text-white">Delhi</h1>
+              <h2 className="text-lg font-semibold text-white">
+                {data && data[3] !== undefined
+                  ? `${data[3]} hotels`
                   : "No hotels"}
               </h2>
             </div>
