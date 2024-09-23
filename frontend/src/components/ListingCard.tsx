@@ -2,11 +2,14 @@ interface ListingCardProps {
   image: string;
   name: string;
   location: string;
-  price: string;
+  price: number;
   rating: number;
   ratingText: string;
   description: string;
   distance: string;
+  title: string;
+  days: number;
+  nights: number;
 }
 
 const ListingCard = ({
@@ -18,6 +21,9 @@ const ListingCard = ({
   ratingText,
   description,
   distance,
+  title,
+  days,
+  nights,
 }: ListingCardProps) => {
   return (
     <div className="flex flex-col md:flex-row border rounded-lg overflow-hidden shadow-md bg-white w-full">
@@ -44,18 +50,17 @@ const ListingCard = ({
         <div className="flex justify-between">
           <div className="flex flex-col pl-4">
             <div className="border-l-2 border-gray-300 pl-4">
-              <div className="font-medium">King Room with Garden View</div>
-              <div className="text-xs">
-                Entire apartment • 1 bedroom • 1 living room • 1 bathroom • 1
-                kitchen • 56m²
-              </div>
+              <div className="font-medium">{title}</div>
+              <div className="text-xs">{description}</div>
               <div className="text-xs">2 beds (1 double, 1 sofa bed)</div>
             </div>
           </div>
           <div className="text-right whitespace-nowrap">
-            <div className="text-sm mt-4 text-right mb-2">8 days 3 night</div>
-            <div className="text-lg font-semibold">₹ 59,600</div>
-            <div className="text-sm">+₹ 7,152 taxes and charges</div>
+            <div className="text-sm mt-4 text-right mb-2">{`${days}days ${nights} night`}</div>
+            <div className="text-lg font-semibold">{`₹ ${price * days}`}</div>
+            <div className="text-sm">{`+₹ ${
+              Math.floor(Math.random() * (2000 - 500 + 1)) + 500
+            } taxes and charges`}</div>
             <div className="flex w-full flex-row-reverse">
               <button className="relative inline-flex items-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg transition-all duration-300 hover:bg-blue-600 group">
                 <span className="transition-transform duration-300 group-hover:-translate-x-1">

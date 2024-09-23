@@ -81,7 +81,7 @@ export function validateHotel(hotel) {
 
     desc: Joi.string().required().label("Description"),
 
-    rating: Joi.number().min(0).max(5).label("Rating"),
+    rating: Joi.number().min(0).max(10).label("Rating"),
 
     rooms: Joi.array().items(Joi.string().label("Room")).label("Rooms"),
 
