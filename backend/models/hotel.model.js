@@ -39,6 +39,12 @@ const hotelSchema = new mongoose.Schema(
       min: 0,
       max: 10,
     },
+    stars: {
+      type: Number,
+      min: 1,
+      max: 5,
+      default: 1,
+    },
     rooms: {
       type: [String],
     },
@@ -82,6 +88,8 @@ export function validateHotel(hotel) {
     desc: Joi.string().required().label("Description"),
 
     rating: Joi.number().min(0).max(10).label("Rating"),
+
+    stars: Joi.number().min(1).max(5).label("Stars").required(),
 
     rooms: Joi.array().items(Joi.string().label("Room")).label("Rooms"),
 
