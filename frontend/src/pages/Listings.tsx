@@ -16,7 +16,6 @@ const Listings = () => {
     location.state.date[0].startDate,
     location.state.date[0].endDate
   );
-  console.log(result);
 
   const SkeletonLoader = () => {
     return (
@@ -62,7 +61,7 @@ const Listings = () => {
       <Header showSearchBar={false} />
       <div className="w-full flex justify-center">
         <div className="flex w-full max-w-[1024px] gap-2">
-          <div className="w-1/4 sticky top-0 h-screen">
+          <div className="w-1/3 sticky top-0 h-screen">
             <SearchFilter />
           </div>
           <div className="space-y-4 grow mt-4">
@@ -73,17 +72,7 @@ const Listings = () => {
               : data.map((item: any, index: number) => (
                   <ListingCard
                     key={index}
-                    image={item.photos[0]}
-                    name={item.name}
-                    location={item.city}
-                    price={item.cheapestPrice}
-                    rating={item.rating}
-                    ratingText="Excellent"
-                    description={item.desc}
-                    distance={item.distance}
-                    title={item.title}
-                    days={result.days}
-                    nights={result.nights}
+                    item={{...item,...result}}
                   />
                 ))}
           </div>
