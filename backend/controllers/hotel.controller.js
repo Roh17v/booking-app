@@ -49,15 +49,23 @@ export const getHotel = async (req, res, next) => {
 };
 
 export const getHotels = async (req, res, next) => {
-  const { min, max, ...others } = req.query;
+  const { min, max, stars, type, ...others } = req.query;
   delete others.limit;
+
   try {
-    const hotel = await Hotel.find({
+    const filter = {
       ...others,
       cheapestPrice: { $gte: min || 1, $lte: max || 10000 },
-    }).limit(req.query.limit);
-    if (!hotel) return res.status(404).send({ message: "Hotel Not Found!" });
-    return res.status(200).send(hotel);
+      stars: { $gte: stars || 1 },
+    };
+
+    if (type) {
+      filter.type = { $in: type.split(",") };
+    }
+
+    const hotels = await Hotel.find(filter).limit(req.query.limit);
+
+    return res.status(200).send(hotels);
   } catch (error) {
     next(error);
   }

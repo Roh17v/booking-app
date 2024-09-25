@@ -31,7 +31,7 @@ const PropertyList = () => {
     <div className="max-w-[1024px] flex gap-4">
       {images.map((images, index) => {
         return loading ? (
-          <Skeleton />
+          <Skeleton key={index} />
         ) : (
           data && (
             <div key={index} className="overflow-hidden rounded-md flex-1">

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Featured from "../components/Featured";
 import FeaturedProperties from "../components/FeaturedProperties";
 import Footer from "../components/Footer";
@@ -5,8 +6,14 @@ import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import NewsLetterSubscription from "../components/NewsLetterSubscription";
 import PropertyList from "../components/PropertyList";
+import { useSearchContext } from "../context/SearchFilterContext";
 
 const Home = () => {
+  const { resetFilters } = useSearchContext();
+
+  useEffect(() => {
+    resetFilters();
+  }, []);
   return (
     <div>
       <Navbar />

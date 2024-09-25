@@ -49,7 +49,7 @@ const ListingCard = ({ item }: ListingCardProps) => {
             </div>
           </div>
           <div className="text-right whitespace-nowrap">
-            <div className="text-sm mt-4 text-right mb-2">{`${item.days}days ${item.nights} night`}</div>
+            <div className="text-sm mt-4 text-right mb-2">{`${item.days} days ${item.nights} night`}</div>
             <div className="text-lg font-semibold">{`₹ ${
               item.cheapestPrice * item.days
             }`}</div>

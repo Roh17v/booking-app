@@ -3,15 +3,28 @@ import Header from "../components/Header";
 import ListingCard from "../components/ListingCard";
 import Navbar from "../components/Navbar";
 import SearchFilter from "../components/SearchFilter";
+import { useSearchContext } from "../context/SearchFilterContext";
 import useFetch from "../hooks/useFetch";
 import { calculateDaysAndNights } from "../utils/getdaysandnight";
 
 const Listings = () => {
+  const { priceRange, propertyType, rating } = useSearchContext();
+
+  const handleSearchFilter = () => {
+    reFetch();
+  };
+
   const location = useLocation();
-  const { data, loading, error } = useFetch(
-    `https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/hotels?city=${location.state.destination.toLowerCase()}`,
+
+  const { data, loading, error, reFetch } = useFetch(
+    `https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/hotels?city=${location.state.destination.toLowerCase()}${
+      rating ? `&stars=${rating}` : ""
+    }${propertyType.length ? `&type=${propertyType.join(",")}` : ""}&max=${
+      priceRange[1]
+    }`,
     { method: "GET" }
   );
+
   const result = calculateDaysAndNights(
     location.state.date[0].startDate,
     location.state.date[0].endDate
@@ -61,8 +74,8 @@ const Listings = () => {
       <Header showSearchBar={false} />
       <div className="w-full flex justify-center">
         <div className="flex w-full max-w-[1024px] gap-2">
-          <div className="w-1/3 sticky top-0 h-screen">
-            <SearchFilter />
+          <div className="w-1/3 sticky top-0 h-screen grow-0">
+            <SearchFilter handleSearchFilter={handleSearchFilter} />
           </div>
           <div className="space-y-4 grow mt-4">
             {loading
@@ -70,10 +83,7 @@ const Listings = () => {
                   <SkeletonLoader key={index} />
                 ))
               : data.map((item: any, index: number) => (
-                  <ListingCard
-                    key={index}
-                    item={{...item,...result}}
-                  />
+                  <ListingCard key={index} item={{ ...item, ...result }} />
                 ))}
           </div>
         </div>
@@ -83,6 +93,3 @@ const Listings = () => {
 };
 
 export default Listings;
-function getdaysandnights() {
-  throw new Error("Function not implemented.");
-}

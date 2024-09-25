@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSearchContext } from "../context/SearchFilterContext";
 
-const SearchFilter: React.FC = () => {
-  const [priceRange, setPriceRange] = useState([0, 10000]);
-  const [propertyType, setPropertyType] = useState<string[]>([]);
-  const [rating, setRating] = useState<number | null>(null);
+interface SearchFilterProps {
+  handleSearchFilter: () => void;
+}
 
-  const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPriceRange([+event.target.value, priceRange[1]]);
+const SearchFilter = ({ handleSearchFilter }: SearchFilterProps) => {
+  const {
+    priceRange,
+    setPriceRange,
+    propertyType,
+    setPropertyType,
+    rating,
+    setRating,
+  } = useSearchContext();
+
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const maxPrice = Number(e.target.value);
+    setPriceRange([priceRange[0], maxPrice]);
   };
 
   const handlePropertyTypeChange = (type: string) => {
@@ -25,12 +36,12 @@ const SearchFilter: React.FC = () => {
 
       {/* Price Range Filter */}
       <div className="mb-4">
-        <h3 className="text-lg font-medium">Price Range</h3>
+        <h3 className="text-md font-medium">Price Range (per night)</h3>
         <input
           type="range"
           min="0"
           max="10000"
-          value={priceRange[0]}
+          value={priceRange[1]}
           onChange={handlePriceChange}
           className="w-full mt-2"
         />
@@ -69,6 +80,24 @@ const SearchFilter: React.FC = () => {
               className="mr-2"
             />
             Resort
+          </label>
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              value="resort"
+              onChange={() => handlePropertyTypeChange("villa")}
+              className="mr-2"
+            />
+            Villas
+          </label>
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              value="resort"
+              onChange={() => handlePropertyTypeChange("cabin")}
+              className="mr-2"
+            />
+            Cabins
           </label>
         </div>
       </div>
@@ -112,7 +141,10 @@ const SearchFilter: React.FC = () => {
         </div>
       </div>
 
-      <button className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+      <button
+        onClick={handleSearchFilter}
+        className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+      >
         Apply Filters
       </button>
     </div>
