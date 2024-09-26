@@ -35,8 +35,8 @@ export const SearchContextProvider = ({
 
   const resetFilters = () => {
     setPriceRange([0, 10000]);
-    setPropertyType([]);
-    setRating(null);
+    setPropertyType(defaultFilters.propertyType);
+    setRating(defaultFilters.rating);
   };
 
   return (

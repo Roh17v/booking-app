@@ -74,10 +74,10 @@ const Listings = () => {
       <Header showSearchBar={false} />
       <div className="w-full flex justify-center">
         <div className="flex w-full max-w-[1024px] gap-2">
-          <div className="w-1/3 sticky top-0 h-screen grow-0">
+          <div className="sticky top-0 h-screen flex-1">
             <SearchFilter handleSearchFilter={handleSearchFilter} />
           </div>
-          <div className="space-y-4 grow mt-4">
+          <div className="space-y-4 flex-[3] mt-4">
             {loading
               ? Array.from({ length: 5 }).map((_, index) => (
                   <SkeletonLoader key={index} />
