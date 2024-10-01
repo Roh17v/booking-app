@@ -44,6 +44,12 @@ const FeaturedProperties = () => {
           nextEl: nextButtonRef.current,
         }}
         modules={[Navigation]}
+        breakpoints={{
+          320: { slidesPerView: 1, spaceBetween: 5 }, // Mobile screens
+          480: { slidesPerView: 2, spaceBetween: 10 }, // Small tablets
+          768: { slidesPerView: 3, spaceBetween: 15 }, // Larger tablets
+          1024: { slidesPerView: 4, spaceBetween: 20 }, // Desktops
+        }}
       >
         {loading
           ? Array.from({ length: 4 }).map((_, index) => (
@@ -54,6 +60,7 @@ const FeaturedProperties = () => {
           : data.map((property: any) => (
               <SwiperSlide key={property._id}>
                 <PropertyCard
+                  id={property._id}
                   imgSrc={property.photos[0]}
                   name={property.name}
                   city={property.city}

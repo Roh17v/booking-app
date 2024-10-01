@@ -129,7 +129,7 @@ const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
               Search deals on hotels, homes, and much more...
             </p>
             <div className="bg-primary-yellow flex flex-col md:flex-row text-slate-600 text-md absolute w-full max-w-md md:max-w-[1024px] transform translate-y-1/2 rounded-md text-lg bottom-0">
-              <div className="flex gap-2 items-center p-3 bg-white m-1 flex-1 rounded-md md:mr-0 relative">
+              <div className="flex gap-2 items-center p-3 bg-white m-1 flex-1 rounded-md md:mr-0 md:relative">
                 <FontAwesomeIcon icon={faBed} className="cursor-pointer" />
                 <input
                   type="text"

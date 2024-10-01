@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 type PropertyCardProps = {
   imgSrc: string;
   name: string;
@@ -5,9 +7,11 @@ type PropertyCardProps = {
   price: string;
   rating: number;
   ratingText: string;
+  id: string;
 };
 
 const PropertyCard = ({
+  id,
   imgSrc,
   name,
   city,
@@ -35,9 +39,11 @@ const PropertyCard = ({
         </div>
       </div>
       <div className="px-6 pt-2 pb-2">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
-          Reserve
-        </button>
+        <Link to={`/hotels/${id}`}>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+            Reserve
+          </button>
+        </Link>
       </div>
     </div>
   );
