@@ -1,3 +1,5 @@
+import addDays from "date-fns/addDays";
+import { useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 
 interface PropertyCount {
@@ -12,6 +14,17 @@ const PropertyList = () => {
       method: "GET",
     }
   );
+
+  const navigate = useNavigate();
+
+  const handleClick = (type: string) => {
+    navigate("/hotels", {
+      state: {
+        type,
+        date: [{ startDate: new Date(), endDate: addDays(new Date(), 7) }],
+      },
+    });
+  };
   const Skeleton = () => (
     <div className="animate-pulse">
       <div className="w-52 h-40 bg-gray-300 rounded-md mb-2"></div>
@@ -28,13 +41,17 @@ const PropertyList = () => {
     "https://cf.bstatic.com/static/img/theme-index/carousel_320x240/card-image-chalet_300/8ee014fcc493cb3334e25893a1dee8c6d36ed0ba.jpg",
   ];
   return (
-    <div className="max-w-[1024px] flex gap-4">
+    <div className="max-w-[1024px] flex flex-col md:flex-row gap-4">
       {images.map((images, index) => {
         return loading ? (
           <Skeleton key={index} />
         ) : (
           data && (
-            <div key={index} className="overflow-hidden rounded-md flex-1">
+            <div
+              key={index}
+              className="overflow-hidden rounded-md flex-1 hover:cursor-pointer"
+              onClick={() => handleClick(data[index].type.slice(0, -1))}
+            >
               <img
                 src={images}
                 alt=""

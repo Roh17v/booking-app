@@ -1,3 +1,5 @@
+import addDays from "date-fns/addDays";
+import { useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 
 const Featured = () => {
@@ -7,6 +9,17 @@ const Featured = () => {
       method: "GET",
     }
   );
+
+  const navigate = useNavigate();
+
+  const hanldeClick = (destination: string) => {
+    navigate("/hotels", {
+      state: {
+        destination: destination,
+        date: [{ startDate: new Date(), endDate: addDays(new Date(), 7) }],
+      },
+    });
+  };
 
   if (error) {
     return <p>Error: {error.message}</p>;
@@ -19,12 +32,15 @@ const Featured = () => {
   );
 
   return (
-    <div className="w-full max-w-[1024px] flex gap-4">
+    <div className="w-full max-w-[1024px] flex flex-col sm:flex-row gap-4 mx-4">
       <div className="relative">
         {loading ? (
           <Skeleton />
         ) : (
-          <>
+          <div
+            onClick={() => hanldeClick("berlin")}
+            className="hover:cursor-pointer"
+          >
             <img
               loading="lazy"
               src="https://q-xx.bstatic.com/xdata/images/city/max250/977237.jpg?k=6d894f6f1bc6d83e5206ee19d4e593b008640ec596ed3803071cc03aff856b8b&o="
@@ -39,7 +55,7 @@ const Featured = () => {
                   : "No hotels"}
               </h2>
             </div>
-          </>
+          </div>
         )}
       </div>
 
@@ -47,7 +63,10 @@ const Featured = () => {
         {loading ? (
           <Skeleton />
         ) : (
-          <>
+          <div
+            onClick={() => hanldeClick("madrid")}
+            className="hover:cursor-pointer"
+          >
             <img
               loading="lazy"
               src="https://q-xx.bstatic.com/xdata/images/city/max250/971353.jpg?k=a5b47d2c38469086427837dfe64ab2e6f57ba52f0504359ef4cc02dc4b9b0737&o="
@@ -62,7 +81,7 @@ const Featured = () => {
                   : "No hotels"}
               </h2>
             </div>
-          </>
+          </div>
         )}
       </div>
 
@@ -70,7 +89,10 @@ const Featured = () => {
         {loading ? (
           <Skeleton />
         ) : (
-          <>
+          <div
+            onClick={() => hanldeClick("london")}
+            className="hover:cursor-pointer"
+          >
             <img
               loading="lazy"
               src="https://r-xx.bstatic.com/xdata/images/city/max250/977262.jpg?k=2b852648c76ccaff8be05333057712eda873343dfaa79cd23e55534a1a55aecc&o="
@@ -85,7 +107,7 @@ const Featured = () => {
                   : "No hotels"}
               </h2>
             </div>
-          </>
+          </div>
         )}
       </div>
 
@@ -93,7 +115,10 @@ const Featured = () => {
         {loading ? (
           <Skeleton />
         ) : (
-          <>
+          <div
+            onClick={() => hanldeClick("delhi")}
+            className="hover:cursor-pointer"
+          >
             <img
               loading="lazy"
               src="https://r-xx.bstatic.com/xdata/images/city/max250/684765.jpg?k=3f7d20034c13ac7686520ac1ccf1621337a1e59860abfd9cbd96f8d66b4fc138&o="
@@ -108,7 +133,7 @@ const Featured = () => {
                   : "No hotels"}
               </h2>
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

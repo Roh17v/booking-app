@@ -60,7 +60,7 @@ export const getHotels = async (req, res, next) => {
     };
 
     if (type) {
-      filter.type = { $in: type.split(",") };
+      filter.type = Array.isArray(type) ? { $in: type } : { $in: type.split(",") };
     }
 
     const hotels = await Hotel.find(filter).limit(req.query.limit);
@@ -98,7 +98,7 @@ export const countByType = async (req, res, next) => {
     const cabinsCount = await Hotel.countDocuments({ type: "cabin" });
 
     return res.status(200).json([
-      { type: "hotel", count: hotelsCount },
+      { type: "hotels", count: hotelsCount },
       { type: "apartments", count: apartmentsCount },
       { type: "resorts", count: resortsCount },
       { type: "villas", count: villasCount },

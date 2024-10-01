@@ -102,8 +102,6 @@ const SearchFilter = ({ handleSearchFilter }: SearchFilterProps) => {
         </div>
       </div>
 
-      <div>{propertyType}</div>
-
       {/* Rating Filter */}
       <div className="mb-4">
         <h3 className="text-lg font-medium">Star Rating</h3>

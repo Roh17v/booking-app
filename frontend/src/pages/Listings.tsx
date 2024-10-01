@@ -15,13 +15,18 @@ const Listings = () => {
   };
 
   const location = useLocation();
+  console.log(location);
 
   const { data, loading, error, reFetch } = useFetch(
-    `https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/hotels?city=${location.state.destination.toLowerCase()}${
-      rating ? `&stars=${rating}` : ""
-    }${propertyType.length ? `&type=${propertyType.join(",")}` : ""}&max=${
-      priceRange[1]
-    }`,
+    `https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/hotels?${
+      location.state.type ? `type=${location.state.type}` : ""
+    }${
+      location.state.destination
+        ? `&city=${location.state.destination.toLowerCase()}`
+        : ""
+    }${rating ? `&stars=${rating}` : ""}${
+      propertyType.length ? `&type=${propertyType.join(",")}` : ""
+    }&max=${priceRange[1]}`,
     { method: "GET" }
   );
 
@@ -68,6 +73,7 @@ const Listings = () => {
       </div>
     );
   };
+
   return (
     <div>
       <Navbar />
@@ -78,13 +84,23 @@ const Listings = () => {
             <SearchFilter handleSearchFilter={handleSearchFilter} />
           </div>
           <div className="space-y-4 flex-[3] mt-4">
-            {loading
-              ? Array.from({ length: 5 }).map((_, index) => (
-                  <SkeletonLoader key={index} />
-                ))
-              : data.map((item: any, index: number) => (
-                  <ListingCard key={index} item={{ ...item, ...result }} />
-                ))}
+            {loading ? (
+              Array.from({ length: 5 }).map((_, index) => (
+                <SkeletonLoader key={index} />
+              ))
+            ) : error ? (
+              <div className="text-red-500 text-center">
+                Error: {error.message}
+              </div>
+            ) : data.length === 0 ? (
+              <div className="text-center text-gray-500">
+                No properties found
+              </div>
+            ) : (
+              data.map((item: any, index: number) => (
+                <ListingCard key={index} item={{ ...item, ...result }} />
+              ))
+            )}
           </div>
         </div>
       </div>
