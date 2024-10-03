@@ -45,7 +45,7 @@ const FeaturedProperties = () => {
         }}
         modules={[Navigation]}
         breakpoints={{
-          320: { slidesPerView: 1, spaceBetween: 5 }, // Mobile screens
+          320: { slidesPerView: 1.2, spaceBetween: 5 }, // Mobile screens
           480: { slidesPerView: 2, spaceBetween: 10 }, // Small tablets
           768: { slidesPerView: 3, spaceBetween: 15 }, // Larger tablets
           1024: { slidesPerView: 4, spaceBetween: 20 }, // Desktops

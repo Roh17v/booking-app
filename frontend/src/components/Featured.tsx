@@ -32,7 +32,7 @@ const Featured = () => {
   );
 
   return (
-    <div className="w-full max-w-[1024px] flex flex-col sm:flex-row gap-4 mx-4">
+    <div className="w-full max-w-[1024px] flex flex-col sm:flex-row gap-4">
       <div className="relative">
         {loading ? (
           <Skeleton />

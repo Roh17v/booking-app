@@ -95,7 +95,7 @@ const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
     <div className="flex justify-center text-white bg-primary-blue relative z-10">
       <div
         className={`max-w-[1024px] w-full mt-[20px] ${
-          showSearchBar ? "mb-[100px]" : "mb-4"
+          showSearchBar ? "md:mb-[100px]" : "mb-4"
         }`}
       >
         <div className="flex flex-col sm:flex-row gap-4 md:gap-8 mx-4 sm:mx-0">
@@ -121,14 +121,14 @@ const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
           </div>
         </div>
         {showSearchBar && (
-          <>
+          <div className="mx-4 sm:mx-0">
             <h1 className="mt-10 text-3xl md:text-5xl font-bold">
               Find your next stay
             </h1>
             <p className="text-lg md:text-2xl mt-2 pb-4 md:pb-0">
               Search deals on hotels, homes, and much more...
             </p>
-            <div className="bg-primary-yellow flex flex-col md:flex-row text-slate-600 text-md absolute w-full max-w-md md:max-w-[1024px] transform translate-y-1/2 rounded-md text-lg bottom-0">
+            <div className="bg-primary-yellow flex flex-col md:flex-row text-slate-600 text-md md:absolute w-full max-w-md md:max-w-[1024px] transform md:translate-y-1/2 rounded-md text-lg bottom-0">
               <div className="flex gap-2 items-center p-3 bg-white m-1 flex-1 rounded-md md:mr-0 md:relative">
                 <FontAwesomeIcon icon={faBed} className="cursor-pointer" />
                 <input
@@ -255,13 +255,13 @@ const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
                 )}
               </div>
               <button
-                className="bg-primary-blue text-white px-4 m-1 rounded-md md:text-xl transition-all focus:scale-95"
+                className="bg-primary-blue text-white px-4 m-1 rounded-md md:text-xl transition-all focus:scale-95 py-2 md:py-0"
                 onClick={handleSearch}
               >
                 Search
               </button>
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>
