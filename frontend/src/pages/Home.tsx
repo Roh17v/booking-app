@@ -6,21 +6,24 @@ import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import NewsLetterSubscription from "../components/NewsLetterSubscription";
 import PropertyList from "../components/PropertyList";
+import { useAuthContext } from "../context/AuthContext";
 import { useSearchContext } from "../context/SearchFilterContext";
 
 const Home = () => {
   const { resetFilters } = useSearchContext();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     resetFilters();
   }, []);
 
+  console.log(user);
   return (
     <div>
       <Navbar />
       <Header showSearchBar={true} />
 
-      <div className="flex flex-col mt-8 items-center gap-8 w-full px-4">
+      <div className="flex flex-col mt-8 md:mt-12 items-center gap-8 w-full px-4">
         <section className="w-full max-w-[1024px]">
           <h1 className="text-xl md:text-2xl font-bold mb-4">
             Trending Destinations
@@ -43,7 +46,7 @@ const Home = () => {
         </section>
       </div>
 
-          <NewsLetterSubscription />
+      <NewsLetterSubscription />
       <Footer />
     </div>
   );

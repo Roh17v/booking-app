@@ -5,7 +5,7 @@ import { createError } from "../utils/error.js";
 
 export const registerUser = async (req, res, next) => {
   const { error } = validateUser(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return next(createError(400, error.details[0].message));
 
   try {
     const newUser = new User(
@@ -19,10 +19,10 @@ export const registerUser = async (req, res, next) => {
     const token = newUser.generateAuthToken();
     res.cookie("authToken", token, {
       httpOnly: true,
-      sameSite: "strict",
+      secure: true,
     });
 
-    return res.status(201).send("User registered Successfully.");
+    return res.status(201).send("User Registered Successfully.");
   } catch (error) {
     next(error);
   }
@@ -30,7 +30,6 @@ export const registerUser = async (req, res, next) => {
 
 export const loginUser = async (req, res, next) => {
   try {
-    console.log(req.body);
     const user = await User.findOne({ email: req.body.email });
     if (!user) return next(createError(404, "User Not Found!"));
 
@@ -45,10 +44,13 @@ export const loginUser = async (req, res, next) => {
     const token = user.generateAuthToken();
     res.cookie("authToken", token, {
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "None",
+      secure: true,
     });
 
-    return res.status(200).send("Logged In Successfully.");
+    return res
+      .status(200)
+      .json({ id: user._id, username: user.username, email: user.email });
   } catch (error) {
     next(error);
   }

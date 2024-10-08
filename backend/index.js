@@ -16,9 +16,9 @@ dotenv.config();
 //middlewares
 app.use(
   cors({
-    origin: "https://5173-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io", // Allow only this origin
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed methods
-    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+    origin: "https://5173-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
   })
 );
 app.use(cookieParser());

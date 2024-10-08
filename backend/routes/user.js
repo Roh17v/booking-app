@@ -5,9 +5,12 @@ import {
   getUsers,
   updateUser,
 } from "../controllers/user.controller.js";
-import { verifyAdmin, verifyUser } from "../middlewares/auth.js";
+import { sendUser, verifyAdmin, verifyUser } from "../middlewares/auth.js";
 
 const router = express.Router();
+
+//SEND USER
+router.get("/me", verifyUser, sendUser);
 
 //UPDATE
 router.put("/:id", verifyUser, updateUser);

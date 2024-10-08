@@ -3,6 +3,7 @@ import { createError } from "../utils/error.js";
 
 export async function validateToken(req, res, next) {
   const token = req.cookies.authToken;
+  console.log(token);
   if (!token)
     return next(createError(401, "Access Denied.You are not Authenticated."));
   try {
@@ -32,5 +33,15 @@ export const verifyAdmin = (req, res, next) => {
     if (req.user.isAdmin) {
       next();
     } else return next(createError(403, "You are not Authorized!"));
+  });
+};
+
+export const sendUser = (req, res, next) => {
+  const user = req.user;
+
+  return res.status(200).json({
+    id: user._id,
+    username: user.username,
+    email: user.email,
   });
 };
