@@ -51,8 +51,8 @@ const Featured = () => {
               <h1 className="text-xl font-bold text-white">Berlin</h1>
               <h2 className="text-lg font-semibold text-white">
                 {data && data[0] !== undefined
-                  ? `${data[0]} hotels`
-                  : "No hotels"}
+                  ? `${data[0]} Properties`
+                  : "No Properties"}
               </h2>
             </div>
           </div>
@@ -77,8 +77,8 @@ const Featured = () => {
               <h1 className="text-xl font-bold text-white">Madrid</h1>
               <h2 className="text-lg font-semibold text-white">
                 {data && data[1] !== undefined
-                  ? `${data[1]} hotels`
-                  : "No hotels"}
+                  ? `${data[1]} Properties`
+                  : "No Properties"}
               </h2>
             </div>
           </div>
@@ -103,8 +103,8 @@ const Featured = () => {
               <h1 className="text-xl font-bold text-white">London</h1>
               <h2 className="text-lg font-semibold text-white">
                 {data && data[2] !== undefined
-                  ? `${data[2]} hotels`
-                  : "No hotels"}
+                  ? `${data[2]} Properties`
+                  : "No Properties"}
               </h2>
             </div>
           </div>
@@ -129,8 +129,8 @@ const Featured = () => {
               <h1 className="text-xl font-bold text-white">Delhi</h1>
               <h2 className="text-lg font-semibold text-white">
                 {data && data[3] !== undefined
-                  ? `${data[3]} hotels`
-                  : "No hotels"}
+                  ? `${data[3]} Properties`
+                  : "No Properties"}
               </h2>
             </div>
           </div>

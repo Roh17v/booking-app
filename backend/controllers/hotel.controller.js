@@ -50,20 +50,19 @@ export const getHotel = async (req, res, next) => {
 };
 
 export const getHotels = async (req, res, next) => {
-  const { min, max, stars, type, ...others } = req.query;
+  const { min, max, type, ...others } = req.query;
   delete others.limit;
 
   try {
     const filter = {
       ...others,
       cheapestPrice: { $gte: min || 1, $lte: max || 10000 },
-      stars: { $gte: stars || 1 },
     };
 
     if (type) {
-      filter.type = Array.isArray(type)
-        ? { $in: type }
-        : { $in: type.split(",") };
+      const typeArray = Array.isArray(type) ? type : type.split(",");
+      const processedTypes = typeArray.flatMap(item => item.split(","));
+      filter.type = { $in: processedTypes };
     }
 
     const hotels = await Hotel.find(filter).limit(req.query.limit);
