@@ -7,12 +7,13 @@ import {
   faPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { addDays, format } from "date-fns";
+import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
-import { DateRange, Range } from "react-date-range";
+import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { useNavigate } from "react-router-dom";
+import { useSearchContext } from "../context/SearchFilterContext";
 
 const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
   const [destination, setDestination] = useState("");
@@ -20,20 +21,8 @@ const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
   const [openPeople, setOpenPeople] = useState(false);
   const [openDate, setOpenDate] = useState(false);
   const [showReminder, setShowReminder] = useState(false);
-  const [date, setDate] = useState<Range[]>([
-    {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
-      key: "selection",
-      autoFocus: true,
-      showDateDisplay: true,
-    },
-  ]);
-  const [options, setOptions] = useState({
-    adult: 1,
-    children: 0,
-    room: 1,
-  });
+
+  const { date, setDate, options, setOptions } = useSearchContext();
 
   const handleOptions = (
     name: "adult" | "children" | "room",

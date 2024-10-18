@@ -18,7 +18,7 @@ const Navbar = () => {
     <nav className="flex w-full justify-center bg-primary-blue h-[50px] py-8 px-4">
       <div className="max-w-[1024px] flex justify-between items-center w-full">
         <div>
-          <Link to={"/"} className="text-2xl text-white font-medium">
+          <Link to={"/"} className="text-2xl text-white font-semibold">
             Booking.com
           </Link>
         </div>
@@ -38,7 +38,7 @@ const Navbar = () => {
               {isTooltipVisible && (
                 <div className="z-50 absolute top-12 left-0 bg-white shadow-md p-3 rounded-md text-sm text-gray-800">
                   <p>
-                    <strong>Username:</strong> {user.username}
+                    <strong>User:</strong> {user.username}
                   </p>
                   <p>
                     <strong>Email:</strong> {user.email}

@@ -1,4 +1,5 @@
 import { Hotel, validateHotel } from "../models/hotel.model.js";
+import { Room } from "../models/room.model.js";
 import { createError } from "../utils/error.js";
 
 export const createHotel = async (req, res, next) => {
@@ -60,7 +61,9 @@ export const getHotels = async (req, res, next) => {
     };
 
     if (type) {
-      filter.type = Array.isArray(type) ? { $in: type } : { $in: type.split(",") };
+      filter.type = Array.isArray(type)
+        ? { $in: type }
+        : { $in: type.split(",") };
     }
 
     const hotels = await Hotel.find(filter).limit(req.query.limit);
@@ -104,6 +107,20 @@ export const countByType = async (req, res, next) => {
       { type: "villas", count: villasCount },
       { type: "cabins", count: cabinsCount },
     ]);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getRoomsByHotel = async (req, res, next) => {
+  try {
+    const hotelId = req.params.hotelid;
+    const hotel = await Hotel.findById(hotelId);
+    const rooms = await Promise.all(
+      hotel.rooms.map((room) => Room.findById(room))
+    );
+
+    return res.status(200).send(rooms);
   } catch (error) {
     next(error);
   }

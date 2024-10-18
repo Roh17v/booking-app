@@ -1,5 +1,6 @@
 import { Hotel } from "../models/hotel.model.js";
 import { Room } from "../models/room.model.js";
+import { createError } from "../utils/error.js";
 
 export const createRoom = async (req, res, next) => {
   const hotelId = req.params.hotelid;
@@ -22,6 +23,33 @@ export const updateRoom = async (req, res, next) => {
       { new: true }
     );
     return res.status(200).send(updatedRoom);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateRoomAvailability = async (req, res, next) => {
+  try {
+    if (!Array.isArray(req.body.dates) || req.body.dates.length === 0) {
+      return next(createError(400, "Dates are required."));
+    }
+
+    const updatedRoom = await Room.updateOne(
+      { "roomNumbers._id": req.params.id },
+      {
+        $push: { "roomNumbers.$.unavailableDates": { $each: req.body.dates } },
+      }
+    );
+
+    if (updatedRoom.modifiedCount === 0) {
+      return res
+        .status(404)
+        .json({ message: "Room not found or no changes made." });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Room availability updated successfully." });
   } catch (error) {
     next(error);
   }

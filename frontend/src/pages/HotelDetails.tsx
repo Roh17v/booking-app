@@ -6,12 +6,14 @@ import {
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons/faLocationDot";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import NewsletterSubscription from "../components/NewsLetterSubscription";
+import ReserveProperty from "../components/ReserveProperty";
 import ThreeDotLoader from "../components/ThreeDotLoader";
+import { useAuthContext } from "../context/AuthContext";
 import useFetch from "../hooks/useFetch";
 import formatCurrency from "../utils/formatcurrency";
 
@@ -24,9 +26,13 @@ const HotelDetails = () => {
       method: "GET",
     }
   );
-  console.log(data);
+
+  const { user } = useAuthContext();
+  const navigate = useNavigate();
+
   const [sliderIndex, setSliderIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleArrow = (direction: string) => {
     setSliderIndex((prevIndex) => {
@@ -42,9 +48,18 @@ const HotelDetails = () => {
     return <ThreeDotLoader />;
   }
 
-  const photos = data.photos.map((photo: any) => ({ src: photo }));
+  const handleReserve = () => {
+    if (user) {
+      setModalOpen(true);
+    } else {
+      const confirm = window.confirm("You need to SignIn to reserve property.");
+      if (confirm) {
+        navigate("/signin");
+      }
+    }
+  };
 
-  console.log(photos);
+  const photos = data.photos.map((photo: any) => ({ src: photo }));
 
   return (
     <div>
@@ -94,7 +109,10 @@ const HotelDetails = () => {
               taxi
             </div>
             <div className="absolute top-4 right-0">
-              <button className="bg-blue-500 text-white rounded-md font-semibold px-3 py-2 hover:bg-blue-600 mt-4">
+              <button
+                onClick={handleReserve}
+                className="bg-blue-500 text-white rounded-md font-semibold px-3 py-2 hover:bg-blue-600 mt-4"
+              >
                 Reserve or Book Now!
               </button>
             </div>
@@ -141,6 +159,9 @@ const HotelDetails = () => {
               </div>
             ))}
           </div>
+          {modalOpen && (
+            <ReserveProperty setModalOpen={setModalOpen} hotelId={id} />
+          )}
           <div className="flex justify-between mt-4 p-2 gap-2 mb-4">
             <div className="flex-[3]">
               <h1 className="text-2xl font-bold mb-2">{data.title}</h1>
@@ -161,7 +182,10 @@ const HotelDetails = () => {
                 )}`}</b>{" "}
                 (9 nights)
               </div>
-              <button className="bg-blue-500 text-white rounded-md font-semibold px-3 py-2 hover:bg-blue-600 mt-4 w-full">
+              <button
+                onClick={handleReserve}
+                className="bg-blue-500 text-white rounded-md font-semibold px-3 py-2 hover:bg-blue-600 mt-4 w-full"
+              >
                 Reserve or Book Now!
               </button>
             </div>
