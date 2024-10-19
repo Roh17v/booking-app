@@ -7,7 +7,6 @@ import {
   useContext,
   useState,
 } from "react";
-import { Range } from "react-date-range";
 
 interface DateRange {
 startDate: Date;

@@ -17,7 +17,7 @@ import { useSearchContext } from "../context/SearchFilterContext";
 
 const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
   const [destination, setDestination] = useState("");
-  const [isActive, setIsActive] = useState(true);
+  const [isActive] = useState(true);
   const [openPeople, setOpenPeople] = useState(false);
   const [openDate, setOpenDate] = useState(false);
   const [showReminder, setShowReminder] = useState(false);
@@ -161,7 +161,7 @@ const Header = ({ showSearchBar }: { showSearchBar: boolean }) => {
                   >
                     <DateRange
                       editableDateInputs={true}
-                      onChange={(item) => setDate([item.selection])}
+                      onChange={(item: any) => setDate([item.selection])}
                       moveRangeOnFirstSelection={false}
                       ranges={date}
                     />

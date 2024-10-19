@@ -18,7 +18,7 @@ const Listings = () => {
   console.log(location);
 
   const { data, loading, error, reFetch } = useFetch(
-    `https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/hotels?${
+    `/api/hotels?${
       location.state.type ? `type=${location.state.type}` : ""
     }${
       location.state.destination

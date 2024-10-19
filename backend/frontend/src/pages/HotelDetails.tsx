@@ -20,8 +20,8 @@ import formatCurrency from "../utils/formatcurrency";
 const HotelDetails = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
-  const { data, loading, error } = useFetch(
-    `https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/hotels/${id}`,
+  const { data, loading } = useFetch(
+    `/api/hotels/${id}`,
     {
       method: "GET",
     }

@@ -9,6 +9,8 @@ import registerRouter from "./routes/register.js";
 import roomRouter from "./routes/room.js";
 import userRouter from "./routes/user.js";
 import connectDB from "./src/db/index.js";
+import path from 'path';
+import { fileURLToPath } from "url";
 
 const app = express();
 dotenv.config();
@@ -47,6 +49,16 @@ app.use((err, req, res, next) => {
     });
   next();
 });
+
+//To get rid of ES module Error
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+//use the frontend app
+app.use(express.static(path.join(__dirname, '/frontend/dist')));
+
+//serve files from frontend
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, '/frontend/dist/index.html')));
 
 connectDB()
   .then(() => {

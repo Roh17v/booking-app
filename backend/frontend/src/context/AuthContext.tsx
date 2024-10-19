@@ -76,7 +76,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const register = async (formData: object): Promise<AuthResult> => {
     try {
       const response = await fetch(
-        "https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/register",
+        "/api/register",
         {
           method: "POST",
           headers: {

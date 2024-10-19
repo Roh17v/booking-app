@@ -8,8 +8,8 @@ interface PropertyCount {
 }
 
 const PropertyList = () => {
-  const { data, loading, error } = useFetch<PropertyCount[]>(
-    "https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/hotels/count-by-type",
+  const { data, loading } = useFetch<PropertyCount[]>(
+    "/api/hotels/count-by-type",
     {
       method: "GET",
     }

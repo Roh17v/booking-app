@@ -4,7 +4,7 @@ import useFetch from "../hooks/useFetch";
 
 const Featured = () => {
   const { data, loading, error } = useFetch(
-    "https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/hotels/count-by-cities?cities=berlin,madrid,london,delhi",
+    "/api/hotels/count-by-cities?cities=berlin,madrid,london,delhi",
     {
       method: "GET",
     }

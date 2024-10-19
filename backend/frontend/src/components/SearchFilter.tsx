@@ -9,9 +9,7 @@ const SearchFilter = ({ handleSearchFilter }: SearchFilterProps) => {
   const {
     priceRange,
     setPriceRange,
-    propertyType,
     setPropertyType,
-    rating,
     setRating,
   } = useSearchContext();
 

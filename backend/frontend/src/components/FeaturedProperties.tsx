@@ -7,7 +7,7 @@ import PropertyCard from "./PropertyCard";
 
 const FeaturedProperties = () => {
   const { data, loading } = useFetch(
-    "https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/hotels?featured=true&limit=10",
+    "/api/hotels?featured=true&limit=10",
     {
       method: "GET",
     }

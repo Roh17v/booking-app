@@ -14,7 +14,7 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
   setModalOpen,
 }) => {
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
-  const { loading, data, error } = useFetch(
+  const { loading, data } = useFetch(
     `https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/hotels/${hotelId}/rooms`,
     {
       method: "GET",
@@ -65,7 +65,7 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
       await Promise.all(
         selectedRooms.map(async (room) => {
           const response = await fetch(
-            `https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/room/availability/${room}`,
+            `/api/room/availability/${room}`,
             {
               method: "PUT",
               credentials: "include",

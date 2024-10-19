@@ -11,7 +11,7 @@ const SignIn = () => {
 
   const navigate = useNavigate();
 
-  const { user, signIn } = useAuthContext();
+  const { signIn } = useAuthContext();
 
   const [error, setError] = useState<string | null | undefined>(null);
   const [message, setMessage] = useState<string | null | undefined>(null);
