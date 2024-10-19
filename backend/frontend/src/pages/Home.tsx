@@ -6,12 +6,10 @@ import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import NewsLetterSubscription from "../components/NewsLetterSubscription";
 import PropertyList from "../components/PropertyList";
-import { useAuthContext } from "../context/AuthContext";
 import { useSearchContext } from "../context/SearchFilterContext";
 
 const Home = () => {
   const { resetFilters } = useSearchContext();
-  const { user } = useAuthContext();
 
   useEffect(() => {
     resetFilters();
