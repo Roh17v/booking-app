@@ -1,6 +1,6 @@
+import React, { useState } from "react";
 import { faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
 import { useSearchContext } from "../context/SearchFilterContext";
 import useFetch from "../hooks/useFetch";
 
@@ -14,18 +14,15 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
   setModalOpen,
 }) => {
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
-  const { loading, data } = useFetch(
-    `/api/hotels/${hotelId}/rooms`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    }
-  );
+  const [reserveLoading, setReserveLoading] = useState<boolean>(false); // Reserve loading state
+  const { loading, data, reFetch } = useFetch(`/api/hotels/${hotelId}/rooms`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
 
-  console.log(data);
 
   const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
@@ -58,9 +55,8 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
     return !isFound;
   };
 
-  console.log(allDates);
-
   const handleReserve = async () => {
+    setReserveLoading(true); 
     try {
       await Promise.all(
         selectedRooms.map(async (room) => {
@@ -81,7 +77,11 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
       alert("Room Reserved Successfully.");
     } catch (error) {
       alert("Failed to Reserve Room.");
+    } finally {
+      setReserveLoading(false); 
     }
+
+    reFetch();
   };
 
   return (
@@ -156,10 +156,15 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
           {/* Reserve Button */}
           {!loading && data?.length !== 0 && (
             <button
-              className="w-full py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700"
+              className={`w-full py-3 ${
+                reserveLoading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700"
+              } text-white font-medium rounded-md`}
               onClick={handleReserve}
+              disabled={reserveLoading}
             >
-              Reserve Now
+              {reserveLoading ? "Reserving..." : "Reserve Now"}
             </button>
           )}
         </div>

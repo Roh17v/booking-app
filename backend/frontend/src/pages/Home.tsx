@@ -17,7 +17,6 @@ const Home = () => {
     resetFilters();
   }, []);
 
-  console.log(user);
   return (
     <div>
       <Navbar />

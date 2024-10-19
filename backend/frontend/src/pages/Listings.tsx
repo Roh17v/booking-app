@@ -15,7 +15,6 @@ const Listings = () => {
   };
 
   const location = useLocation();
-  console.log(location);
 
   const { data, loading, error, reFetch } = useFetch(
     `/api/hotels?${

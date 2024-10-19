@@ -55,6 +55,29 @@ export const updateRoomAvailability = async (req, res, next) => {
   }
 };
 
+export const deleteUnavailableDates = async (req, res, next) => {
+  try {
+    const updatedRoom = await Room.updateOne(
+      { "roomNumbers._id": req.params.id },
+      {
+        $set: { "roomNumbers.$.unavailableDates": [] },
+      }
+    );
+
+    if (updatedRoom.modifiedCount === 0) {
+      return res
+        .status(404)
+        .json({ message: "Room not found or no changes made." });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Room availability updated successfully." });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const deleteRoom = async (req, res, next) => {
   try {
     await Hotel.findByIdAndUpdate(req.params.hotelid, {
