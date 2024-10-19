@@ -15,7 +15,7 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
 }) => {
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
   const { loading, data } = useFetch(
-    `https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/hotels/${hotelId}/rooms`,
+    `/api/hotels/${hotelId}/rooms`,
     {
       method: "GET",
       headers: {
@@ -64,17 +64,14 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
     try {
       await Promise.all(
         selectedRooms.map(async (room) => {
-          const response = await fetch(
-            `/api/room/availability/${room}`,
-            {
-              method: "PUT",
-              credentials: "include",
-              headers: {
-                "Content-Type": "Application/json",
-              },
-              body: JSON.stringify({ dates: allDates }),
-            }
-          );
+          const response = await fetch(`/api/room/availability/${room}`, {
+            method: "PUT",
+            credentials: "include",
+            headers: {
+              "Content-Type": "Application/json",
+            },
+            body: JSON.stringify({ dates: allDates }),
+          });
 
           if (!response.ok) {
             throw new Error("Failed to Reserve Room.");
@@ -152,7 +149,9 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
             ))
           )}
 
-          {data?.length === 0 && <div className="text-center text-gray-500">No Rooms Found!</div>}
+          {data?.length === 0 && (
+            <div className="text-center text-gray-500">No Rooms Found!</div>
+          )}
 
           {/* Reserve Button */}
           {!loading && data?.length !== 0 && (
