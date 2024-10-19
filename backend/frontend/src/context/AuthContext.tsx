@@ -43,16 +43,13 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   const signIn = async (formData: object): Promise<AuthResult> => {
     try {
-      const response = await fetch(
-        "https://5000-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io/api/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -75,16 +72,13 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   };
   const register = async (formData: object): Promise<AuthResult> => {
     try {
-      const response = await fetch(
-        "/api/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (response.ok) {
         return {
