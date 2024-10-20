@@ -1,6 +1,6 @@
-import React, { useState } from "react";
 import { faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
 import { useSearchContext } from "../context/SearchFilterContext";
 import useFetch from "../hooks/useFetch";
 
@@ -23,7 +23,6 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
     credentials: "include",
   });
 
-
   const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     const value = e.target.value;
@@ -40,7 +39,8 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
     const date = new Date(startDate.getTime());
     let dateList = [];
     while (date <= endDate) {
-      dateList.push(new Date(date).getTime());
+      const dateStr = new Date(date).toISOString().split("T")[0];
+      dateList.push(dateStr);
       date.setDate(date.getDate() + 1);
     }
 
@@ -49,14 +49,18 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
 
   const allDates = getDatesRange(date[0].startDate, date[0].endDate);
   const isAvailable = (roomNumber: any) => {
-    const isFound = roomNumber.unavailableDates.some((date: number) =>
-      allDates.includes(new Date(date).getTime())
+    const unavailableDates = roomNumber.unavailableDates.map(
+      (date: string) => new Date(date).toISOString().split("T")[0]
     );
+    const unavailableSet = new Set(unavailableDates);
+
+    const isFound = allDates.some((date: string) => unavailableSet.has(date));
+
     return !isFound;
   };
 
   const handleReserve = async () => {
-    setReserveLoading(true); 
+    setReserveLoading(true);
     try {
       await Promise.all(
         selectedRooms.map(async (room) => {
@@ -78,7 +82,7 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
     } catch (error) {
       alert("Failed to Reserve Room.");
     } finally {
-      setReserveLoading(false); 
+      setReserveLoading(false);
     }
 
     reFetch();
