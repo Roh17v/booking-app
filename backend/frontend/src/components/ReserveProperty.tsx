@@ -36,11 +36,12 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
   const { date } = useSearchContext();
 
   const getDatesRange = (startDate: Date, endDate: Date) => {
-    const date = new Date(startDate.getTime());
+    const date = new Date(startDate.setHours(0, 0, 0, 0));
+    const end = new Date(endDate.setHours(0, 0, 0, 0));
     let dateList = [];
-    while (date <= endDate) {
-      const dateStr = new Date(date).toISOString().split("T")[0];
-      dateList.push(dateStr);
+
+    while (date <= end) {
+      dateList.push(date.getTime());
       date.setDate(date.getDate() + 1);
     }
 
@@ -49,15 +50,14 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
 
   const allDates = getDatesRange(date[0].startDate, date[0].endDate);
   const isAvailable = (roomNumber: any) => {
-    const unavailableDates = roomNumber.unavailableDates.map(
-      (date: string) => new Date(date).toISOString().split("T")[0]
+    const isFound = roomNumber.unavailableDates.some((date: number) =>
+      allDates.includes(date)
     );
-    const unavailableSet = new Set(unavailableDates);
-
-    const isFound = allDates.some((date: string) => unavailableSet.has(date));
-
     return !isFound;
   };
+
+  console.log(allDates);
+  console.log(new Date(allDates[0]));
 
   const handleReserve = async () => {
     setReserveLoading(true);
