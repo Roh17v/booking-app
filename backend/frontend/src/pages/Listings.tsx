@@ -14,12 +14,12 @@ const Listings = () => {
     reFetch();
   };
 
+  const { date } = useSearchContext();
+
   const location = useLocation();
 
   const { data, loading, error, reFetch } = useFetch(
-    `/api/hotels?${
-      location.state.type ? `type=${location.state.type}` : ""
-    }${
+    `/api/hotels?${location.state.type ? `type=${location.state.type}` : ""}${
       location.state.destination
         ? `&city=${location.state.destination.toLowerCase()}`
         : ""
@@ -29,10 +29,7 @@ const Listings = () => {
     { method: "GET" }
   );
 
-  const result = calculateDaysAndNights(
-    location.state.date[0].startDate,
-    location.state.date[0].endDate
-  );
+  const result = calculateDaysAndNights(date[0].startDate, date[0].endDate);
 
   const SkeletonLoader = () => {
     return (

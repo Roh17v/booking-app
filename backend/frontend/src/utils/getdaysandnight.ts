@@ -1,4 +1,7 @@
-export function calculateDaysAndNights(startDate: string, endDate: string) {
+export function calculateDaysAndNights(
+  startDate: string | Date,
+  endDate: string | Date
+) {
   const start = new Date(startDate);
   const end = new Date(endDate);
 
@@ -12,7 +15,7 @@ export function calculateDaysAndNights(startDate: string, endDate: string) {
   const nights = days - 1;
 
   return {
-    days: days,
-    nights: nights,
+    days: days <= 0 ? 1 : days,
+    nights: nights < 0 ? 0 : nights,
   };
 }
