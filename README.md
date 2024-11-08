@@ -17,7 +17,7 @@ A full-stack web application inspired by [Booking.com](https://www.booking.com),
 ![Property Booking](./screenshots/booking3.png)
 
 ## 🚀 Live Demo
-You can access a live demo of the project [here]([https://your-demo-link.com](https://booking-app-x008.onrender.com/)).
+You can access a live demo of the project [here](https://booking-app-x008.onrender.com/).
 
 ## 🌟 Features
 
