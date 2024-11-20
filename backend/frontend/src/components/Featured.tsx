@@ -69,7 +69,7 @@ const Featured = () => {
           >
             <img
               loading="lazy"
-              src="https://cf.bstatic.com/xdata/images/city/600x600/981656.jpg?k=7ef64f3ab955d484f092fc638773f88d5c6844bdee27ea824eb4f25be314f758&o="
+              src="https://cf.bstatic.com/xdata/images/city/max250/981656.jpg?k=7ef64f3ab955d484f092fc638773f88d5c6844bdee27ea824eb4f25be314f758&o="
               alt="Madrid"
               className="w-full object-cover overflow-hidden rounded-md"
             />
