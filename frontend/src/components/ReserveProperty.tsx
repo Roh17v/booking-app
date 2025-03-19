@@ -69,14 +69,17 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
     try {
       await Promise.all(
         selectedRooms.map(async (room) => {
-          const response = await fetch(`/api/room/availability/${room}`, {
-            method: "PUT",
-            credentials: "include",
-            headers: {
-              "Content-Type": "Application/json",
-            },
-            body: JSON.stringify({ dates: allDates }),
-          });
+          const response = await fetch(
+            `${import.meta.env.VITE_API}/api/room/availability/${room}`,
+            {
+              method: "PUT",
+              credentials: "include",
+              headers: {
+                "Content-Type": "Application/json",
+              },
+              body: JSON.stringify({ dates: allDates }),
+            }
+          );
 
           if (!response.ok) {
             throw new Error("Failed to Reserve Room.");
