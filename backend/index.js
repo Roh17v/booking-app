@@ -12,17 +12,26 @@ import connectDB from "./src/db/index.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
+const allowedOrigins = [process.env.FRONTEND_URL, "http://localhost:5173"];
+
 const app = express();
 dotenv.config();
 
 //middlewares
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "*",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
 );
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
