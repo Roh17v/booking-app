@@ -18,7 +18,7 @@ dotenv.config();
 //middlewares
 app.use(
   cors({
-    origin: "https://5173-roh17v-bookingapp-67gwvi3g9g3.ws-us116.gitpod.io",
+    origin: process.env.FRONTEND_URL,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
@@ -49,18 +49,6 @@ app.use((err, req, res, next) => {
     });
   next();
 });
-
-//To get rid of ES module Error
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-//use the frontend app
-app.use(express.static(path.join(__dirname, "/frontend/dist")));
-
-//serve files from frontend
-app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "/frontend/dist/index.html"))
-);
 
 connectDB()
   .then(() => {
