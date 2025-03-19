@@ -9,7 +9,7 @@ import registerRouter from "./routes/register.js";
 import roomRouter from "./routes/room.js";
 import userRouter from "./routes/user.js";
 import connectDB from "./src/db/index.js";
-import path from 'path';
+import path from "path";
 import { fileURLToPath } from "url";
 
 const app = express();
@@ -55,10 +55,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 //use the frontend app
-app.use(express.static(path.join(__dirname, '/frontend/dist')));
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
 //serve files from frontend
-app.get('*', (req, res) => res.sendFile(path.join(__dirname, '/frontend/dist/index.html')));
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "/frontend/dist/index.html"))
+);
 
 connectDB()
   .then(() => {
@@ -70,3 +72,5 @@ connectDB()
     console.log("Failed to Connect to MongoDB...", error);
     process.exit(1);
   });
+
+export default app;
