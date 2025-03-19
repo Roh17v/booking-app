@@ -7,7 +7,7 @@ import PropertyCard from "./PropertyCard";
 
 const FeaturedProperties = () => {
   const { data, loading } = useFetch(
-    "/api/hotels?featured=true&limit=10",
+    `${import.meta.env.VITE_API}/api/hotels?featured=true&limit=10`,
     {
       method: "GET",
     }

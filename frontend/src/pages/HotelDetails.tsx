@@ -21,7 +21,7 @@ const HotelDetails = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const { data, loading } = useFetch(
-    `/api/hotels/${id}`,
+    `${import.meta.env.VITE_API}/api/hotels/${id}`,
     {
       method: "GET",
     }

@@ -4,7 +4,9 @@ import useFetch from "../hooks/useFetch";
 
 const Featured = () => {
   const { data, loading, error } = useFetch(
-    "/api/hotels/count-by-cities?cities=berlin,madrid,london,delhi",
+    `${
+      import.meta.env.VITE_API
+    }/api/hotels/count-by-cities?cities=berlin,madrid,london,delhi`,
     {
       method: "GET",
     }

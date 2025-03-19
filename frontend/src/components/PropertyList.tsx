@@ -9,7 +9,7 @@ interface PropertyCount {
 
 const PropertyList = () => {
   const { data, loading } = useFetch<PropertyCount[]>(
-    "/api/hotels/count-by-type",
+    `${import.meta.env.VITE_API}/api/hotels/count-by-type`,
     {
       method: "GET",
     }

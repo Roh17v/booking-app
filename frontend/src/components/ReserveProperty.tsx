@@ -15,13 +15,16 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
 }) => {
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
   const [reserveLoading, setReserveLoading] = useState<boolean>(false); // Reserve loading state
-  const { loading, data, reFetch } = useFetch(`/api/hotels/${hotelId}/rooms`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
+  const { loading, data, reFetch } = useFetch(
+    `${import.meta.env.VITE_API}/api/hotels/${hotelId}/rooms`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    }
+  );
 
   const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;

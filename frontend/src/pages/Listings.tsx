@@ -19,7 +19,9 @@ const Listings = () => {
   const location = useLocation();
 
   const { data, loading, error, reFetch } = useFetch(
-    `/api/hotels?${location.state.type ? `type=${location.state.type}` : ""}${
+    `${import.meta.env.VITE_API}/api/hotels?${
+      location.state.type ? `type=${location.state.type}` : ""
+    }${
       location.state.destination
         ? `&city=${location.state.destination.toLowerCase()}`
         : ""
