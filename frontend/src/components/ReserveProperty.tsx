@@ -14,7 +14,7 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
   setModalOpen,
 }) => {
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
-  const [reserveLoading, setReserveLoading] = useState<boolean>(false); // Reserve loading state
+  const [reserveLoading, setReserveLoading] = useState<boolean>(false);
   const { loading, data, reFetch } = useFetch(
     `${import.meta.env.VITE_API}/api/hotels/${hotelId}/rooms`,
     {
@@ -25,6 +25,8 @@ const ReverseProperty: React.FC<ReversePropertyProps> = ({
       credentials: "include",
     }
   );
+
+  console.log(data);
 
   const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;

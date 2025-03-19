@@ -21,7 +21,7 @@ const useFetch = <T = any>(url: string, option: RequestInit) => {
     };
 
     fetchData();
-  }, []);
+  }, [url]);
 
   const reFetch = async () => {
     setLoading(true);

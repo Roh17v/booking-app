@@ -43,7 +43,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   const signIn = async (formData: object): Promise<AuthResult> => {
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch(`${import.meta.env.VITE_API}/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +72,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   };
   const register = async (formData: object): Promise<AuthResult> => {
     try {
-      const response = await fetch("/api/register", {
+      const response = await fetch(`${import.meta.env.VITE_API}/api/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
